@@ -1,0 +1,31 @@
+= Go Capillarity
+
+image:https://travis-ci.org/ldez/go-capillarity.svg?branch=master[Build Status,link=https://travis-ci.org/ldez/go-capillarity]
+image:https://godoc.org/github.com/ldez/go-capillarity?status.svg[godoc,link=https://godoc.org/github.com/ldez/go-capillarity]
+
+A simple object filler.
+
+Example:
+
+[source,go]
+----
+type MyStruct struct {
+	Foo string
+	Bar struct {
+		One string
+		Two string
+	}
+}
+
+myStruct := MyStruct{}
+
+capil := capillarity.NewCapillarity()
+err := capil.Fill(&myStruct)
+if err != nil {
+	log.Fatal(err)
+}
+
+fmt.Printf("%+v", myStruct)
+
+// output: {Foo:foobar Bar:{One:foobar Two:foobar}}
+----
