@@ -1,0 +1,6 @@
+.idea/
+*.bak
+tmp/
+vendor/
+*.swp
+
