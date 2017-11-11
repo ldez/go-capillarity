@@ -5,7 +5,9 @@ image:https://godoc.org/github.com/ldez/go-capillarity?status.svg[godoc,link=htt
 
 A simple object filler.
 
-Example:
+== Examples
+
+* Basic case:
 
 [source,go]
 ----
@@ -28,4 +30,29 @@ if err != nil {
 fmt.Printf("%+v", myStruct)
 
 // output: {Foo:foobar Bar:{One:foobar Two:foobar}}
+----
+
+* With options:
+
+[source,go]
+----
+type MyStruct struct {
+	Foo string
+	Bar struct {
+		One string
+		Two int
+	}
+}
+
+myStruct := MyStruct{}
+
+capil := capillarity.NewCapillarity(capillarity.WithDefaultString("go"), capillarity.WithDefaultNumber(6))
+err := capil.Fill(&myStruct)
+if err != nil {
+	log.Fatal(err)
+}
+
+fmt.Printf("%+v", myStruct)
+
+// output: {Foo:go Bar:{One:go Two:6}}
 ----

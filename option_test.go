@@ -6,7 +6,6 @@ import (
 )
 
 func TestNewCapillarityWithOption(t *testing.T) {
-
 	testCases := []struct {
 		name     string
 		actual   Capillarity
@@ -86,14 +85,26 @@ func TestNewCapillarityWithOption(t *testing.T) {
 		},
 		{
 			name:   "WithDefaultMapKeyPrefix",
-			actual: NewCapillarity(WithDefaultMapKeyPrefix("key")),
+			actual: NewCapillarity(WithDefaultMapKeyPrefix("prefix")),
 			expected: Capillarity{
 				SliceItemNumber:     2,
 				MapItemNumber:       2,
 				DefaultString:       "foobar",
 				DefaultNumber:       theAnswer,
 				DefaultBool:         true,
-				DefaultMapKeyPrefix: "key",
+				DefaultMapKeyPrefix: "prefix",
+			},
+		},
+		{
+			name:   "multiple options",
+			actual: NewCapillarity(WithDefaultString("go"), WithDefaultNumber(6), WithDefaultMapKeyPrefix("prefix")),
+			expected: Capillarity{
+				SliceItemNumber:     2,
+				MapItemNumber:       2,
+				DefaultString:       "go",
+				DefaultNumber:       6,
+				DefaultBool:         true,
+				DefaultMapKeyPrefix: "prefix",
 			},
 		},
 	}
