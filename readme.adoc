@@ -8,7 +8,7 @@ A simple object filler.
 == Examples
 
 * Basic case:
-
++
 [source,go]
 ----
 type MyStruct struct {
@@ -33,7 +33,7 @@ fmt.Printf("%+v", myStruct)
 ----
 
 * With options:
-
++
 [source,go]
 ----
 type MyStruct struct {
