@@ -10,7 +10,7 @@ const theAnswer = 42
 // Capillarity configuration
 type Capillarity struct {
 	ExcludedFieldNames  []string
-	SlideItemNumber     int
+	SliceItemNumber     int
 	MapItemNumber       int
 	DefaultString       string
 	DefaultNumber       int
@@ -18,16 +18,22 @@ type Capillarity struct {
 	DefaultMapKeyPrefix string
 }
 
-// NewCapillarity Create a new default Capillarity
-func NewCapillarity() Capillarity {
-	return Capillarity{
-		SlideItemNumber:     2,
+// NewCapillarity Create a new Capillarity
+func NewCapillarity(options ...Option) Capillarity {
+	capil := &Capillarity{
+		SliceItemNumber:     2,
 		MapItemNumber:       2,
 		DefaultString:       "foobar",
 		DefaultNumber:       theAnswer,
 		DefaultBool:         true,
 		DefaultMapKeyPrefix: "name",
 	}
+
+	for _, opt := range options {
+		opt(capil)
+	}
+
+	return *capil
 }
 
 // Fill an object
@@ -165,7 +171,7 @@ func (c Capillarity) setStruct(field reflect.Value) error {
 }
 
 func (c Capillarity) setSlice(field reflect.Value) error {
-	field.Set(reflect.MakeSlice(field.Type(), c.SlideItemNumber, c.SlideItemNumber))
+	field.Set(reflect.MakeSlice(field.Type(), c.SliceItemNumber, c.SliceItemNumber))
 	for j := 0; j < field.Len(); j++ {
 		if err := c.fill(field.Index(j)); err != nil {
 			return err
