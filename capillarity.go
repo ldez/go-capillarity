@@ -115,7 +115,7 @@ func (c Capillarity) setMap(field reflect.Value) error {
 
 	for i := 0; i < c.MapItemNumber; i++ {
 		// TODO support only string... must be fixed
-		//fmt.Println(field.Type().Key())
+		// fmt.Println(field.Type().Key())
 		baseKeyName := c.makeKeyName(field.Type().Elem())
 		key := reflect.ValueOf(fmt.Sprintf("%s%d", baseKeyName, i))
 
