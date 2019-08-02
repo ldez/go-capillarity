@@ -69,39 +69,39 @@ func (c Capillarity) fill(field reflect.Value) error {
 			return err
 		}
 	case reflect.String:
-		c.setTyped(field, c.DefaultString)
+		setTyped(field, c.DefaultString)
 	case reflect.Int:
-		c.setTyped(field, c.DefaultNumber)
+		setTyped(field, c.DefaultNumber)
 	case reflect.Int8:
-		c.setTyped(field, int8(c.DefaultNumber))
+		setTyped(field, int8(c.DefaultNumber))
 	case reflect.Int16:
-		c.setTyped(field, int16(c.DefaultNumber))
+		setTyped(field, int16(c.DefaultNumber))
 	case reflect.Int32:
-		c.setTyped(field, int32(c.DefaultNumber))
+		setTyped(field, int32(c.DefaultNumber))
 	case reflect.Int64:
-		c.setTyped(field, int64(c.DefaultNumber))
+		setTyped(field, int64(c.DefaultNumber))
 	case reflect.Uint:
-		c.setTyped(field, uint(c.DefaultNumber))
+		setTyped(field, uint(c.DefaultNumber))
 	case reflect.Uint8:
-		c.setTyped(field, uint8(c.DefaultNumber))
+		setTyped(field, uint8(c.DefaultNumber))
 	case reflect.Uint16:
-		c.setTyped(field, uint16(c.DefaultNumber))
+		setTyped(field, uint16(c.DefaultNumber))
 	case reflect.Uint32:
-		c.setTyped(field, uint32(c.DefaultNumber))
+		setTyped(field, uint32(c.DefaultNumber))
 	case reflect.Uint64:
-		c.setTyped(field, uint64(c.DefaultNumber))
+		setTyped(field, uint64(c.DefaultNumber))
 	case reflect.Bool:
-		c.setTyped(field, c.DefaultBool)
+		setTyped(field, c.DefaultBool)
 	case reflect.Float32:
-		c.setTyped(field, float32(c.DefaultNumber))
+		setTyped(field, float32(c.DefaultNumber))
 	case reflect.Float64:
-		c.setTyped(field, float64(c.DefaultNumber))
+		setTyped(field, float64(c.DefaultNumber))
 	}
 
 	return nil
 }
 
-func (c Capillarity) setTyped(field reflect.Value, i interface{}) {
+func setTyped(field reflect.Value, i interface{}) {
 	baseValue := reflect.ValueOf(i)
 	if field.Kind().String() == field.Type().String() {
 		field.Set(baseValue)
@@ -183,15 +183,9 @@ func (c Capillarity) setSlice(field reflect.Value) error {
 func (c Capillarity) setPointer(field reflect.Value) error {
 	if field.IsNil() {
 		field.Set(reflect.New(field.Type().Elem()))
-		if err := c.fill(field.Elem()); err != nil {
-			return err
-		}
-	} else {
-		if err := c.fill(field.Elem()); err != nil {
-			return err
-		}
 	}
-	return nil
+
+	return c.fill(field.Elem())
 }
 
 // isExported return true is a struct field is exported, else false
